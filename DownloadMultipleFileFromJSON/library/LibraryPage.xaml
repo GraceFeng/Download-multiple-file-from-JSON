@@ -1,0 +1,168 @@
+﻿<Page
+    x:Class="DownloadMultipleFileFromJSON.library.LibraryPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DownloadMultipleFileFromJSON.library"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="#FFF49A20">
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition />
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="249*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid VerticalAlignment="Center" Grid.Row="0" Margin="0,17,10,17" Height="54">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="79" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="100" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Button x:Name="backButton" Margin="17,8,0,0" Command="{Binding NavigationHelper.GoBackCommand, ElementName=pageRoot}"
+				Style="{StaticResource NavigationBackButtonNormalStyle}"
+				VerticalAlignment="Top"
+				AutomationProperties.Name="Back"
+				AutomationProperties.AutomationId="BackButton"
+				AutomationProperties.ItemType="Navigation Button" Foreground="White" Click="backButton_Click" />
+
+            <ScrollViewer x:Name="scrollName" Grid.Column="1" Grid.ColumnSpan="1" HorizontalAlignment="Left" Background="{x:Null}" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled" VerticalAlignment="Center">
+                <TextBlock x:Name="pageTitle" Style="{StaticResource HeaderTextBlockStyle}"
+				IsHitTestVisible="false" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Left" Width="auto" Text="Library" FontFamily="Segoe UI Black" FontSize="45" Foreground="White" FontWeight="SemiBold" />
+            </ScrollViewer>
+        </Grid>
+
+        <Grid x:Name="content" Grid.Row="1" Background="#FF5B5046">
+            <ProgressBar x:Name="loading" VerticalAlignment="Top" Height="10" Background="{x:Null}" Foreground="White" />
+            <!--<layout:SfCarousel x:Name="carousel" Offset="150" SelectedItemOffset="60" SelectionChanged="carousel_SelectionChanged" Grid.Row="1" HorizontalAlignment="Center" Margin="0,10,0,10">
+                <layout:SfCarousel.ItemTemplate>
+                    <DataTemplate>
+                        <Grid x:Name="grid4"  Background="{x:Null}">
+                            <Grid Background="White">
+                                <Image x:Name="cover" Source="{Binding Image}" HorizontalAlignment="Center" Stretch="Uniform" Height="420" />
+                                <TextBlock Visibility="Collapsed" x:Name="judulbuku"  Margin="10" Width="300"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Bottom"
+                                                       FontSize="20"
+                                                       Foreground="{ThemeResource AppBarBackgroundThemeBrush}"
+                                                       Text="{Binding Name}"
+                                                       TextAlignment="Center"
+                                                       TextWrapping="Wrap" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False" IsTapEnabled="False" FontWeight="Bold" />
+                            </Grid>
+                            <Rectangle HorizontalAlignment="Stretch" Grid.Row="1" Height="186"
+                                                   Margin="0 0 0 -180" VerticalAlignment="Bottom">
+                                <Rectangle.Fill>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="#41FFFFFF" />
+                                        <GradientStop Color="#19FFFFFF" Offset="0.259" />
+                                        <GradientStop Color="Transparent" Offset="0.681" />
+                                    </LinearGradientBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </Grid>
+                    </DataTemplate>
+                </layout:SfCarousel.ItemTemplate>
+            </layout:SfCarousel>-->
+        </Grid>
+
+        <Grid x:Name="menuBawah" Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="6" Orientation="Vertical" VerticalAlignment="Center" Margin="5,0,0,0">
+                <ScrollViewer Grid.Row="0" Grid.RowSpan="1" Grid.ColumnSpan="6" Grid.Column="0" Background="{x:Null}" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" VerticalAlignment="Top">
+                    <TextBlock x:Name="downloadfilename" Text="Downloading ......"
+                                       IsHitTestVisible="false" TextWrapping="Wrap"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="auto" FontSize="20" Foreground="White" />
+                </ScrollViewer>
+                <ProgressBar x:Name="DownloadProgress" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" HorizontalAlignment="Left" Height="30" VerticalAlignment="Center" Foreground="White" />
+                <TextBlock x:Name="statusdownload" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6" Text="Calculating...." IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Center" HorizontalAlignment="Left" Width="auto" FontSize="20" FontFamily="Global User Interface" Foreground="White" />
+            </StackPanel>
+
+            <!--<StackPanel Grid.Column="6" Grid.RowSpan="3" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <AppBarButton x:Name="viewBtn" Icon="Read" Label="Baca" Click="viewBtn_Click" Foreground="White" />
+                <AppBarButton x:Name="deleteBtn" Icon="Delete" Label="Delete" Click="deleteBtn_Click" Foreground="White" />
+                -->
+            <!--<AppBarButton x:Name="restoreBtn" Icon="Refresh" Label="Restore" Click="restoreBtn_Click" Foreground="White" />-->
+            <!--
+            </StackPanel>-->
+        </Grid>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="WindowStates">
+                <!--<VisualStateGroup.Transitions>
+                    <VisualTransition GeneratedDuration="0:0:0.5" />
+                    <VisualTransition From="Narrow" GeneratedDuration="0:0:0.5" To="Snapped" />
+                    <VisualTransition From="Snapped" GeneratedDuration="0:0:0.5" To="Fullscreen" />
+                    <VisualTransition From="Fullscreen" GeneratedDuration="0:0:0.5" To="Snapped" />
+                    <VisualTransition From="Snapped" GeneratedDuration="0:0:0.5" To="Narrow" />
+                </VisualStateGroup.Transitions>-->
+                <VisualState x:Name="WideState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="800" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="pageTitle.FontSize" Value="42" />
+                        <Setter Target="content.(Grid.Row)" Value="1" />
+                        <Setter Target="carousel.(Grid.Row)" Value="1" />
+                        <Setter Target="menuBawah.(Grid.Row)" Value="2" />
+                        <Setter Target="menuBawah.(Grid.RowSpan)" Value="3" />
+                        <Setter Target="menuBawah.(Grid.Column)" Value="0" />
+                        <Setter Target="menuBawah.(Grid.ColumnSpan)" Value="6" />
+                        <Setter Target="downloadfilename.FontSize" Value="20" />
+                        <Setter Target="DownloadProgress.Height" Value="30" />
+                        <Setter Target="DownloadProgress.Width" Value="1100" />
+                        <Setter Target="statusdownload.FontSize" Value="20" />
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="pageTitle.FontSize" Value="35" />
+                        <Setter Target="content.(Grid.Row)" Value="1" />
+                        <Setter Target="carousel.(Grid.Row)" Value="1" />
+                        <Setter Target="menuBawah.(Grid.Row)" Value="2" />
+                        <Setter Target="menuBawah.(Grid.RowSpan)" Value="3" />
+                        <Setter Target="menuBawah.(Grid.Column)" Value="0" />
+                        <Setter Target="menuBawah.(Grid.ColumnSpan)" Value="6" />
+                        <Setter Target="downloadfilename.FontSize" Value="15" />
+                        <Setter Target="DownloadProgress.Height" Value="20" />
+                        <Setter Target="DownloadProgress.Width" Value="280" />
+                        <Setter Target="statusdownload.FontSize" Value="15" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
+</Page>
